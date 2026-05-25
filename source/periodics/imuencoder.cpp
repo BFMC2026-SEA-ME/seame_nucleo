@@ -188,27 +188,9 @@ namespace periodics
         split_milli(imuSample.quat_z_milli, &qz_sign, &qz_int, &qz_frac);
         split_milli(imuSample.quat_w_milli, &qw_sign, &qw_int, &qw_frac);
 
-        // Covariances are emitted as fixed-point with 6 fractional digits.
-        const int32_t cov_zero_int = 0;
-        const int32_t cov_zero_frac = 0;
-
-        const int32_t cov_ori_micro = 1220;   // 0.001220 (rad^2)
-        const int32_t cov_ang_micro = 400;    // 0.000400 ((rad/s)^2)
-        const int32_t cov_lin_micro = 40000;  // 0.040000 ((m/s^2)^2)
-
-        const int32_t cov_ori_int = cov_ori_micro / 1000000;
-        const int32_t cov_ori_frac = cov_ori_micro % 1000000;
-        const int32_t cov_ang_int = cov_ang_micro / 1000000;
-        const int32_t cov_ang_frac = cov_ang_micro % 1000000;
-        const int32_t cov_lin_int = cov_lin_micro / 1000000;
-        const int32_t cov_lin_frac = cov_lin_micro % 1000000;
-
         char buffer[BUFFER_SIZE];
         snprintf(buffer, sizeof(buffer),
-            "@imuenc:%llu;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%02d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;"
-            "%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;"
-            "%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;"
-            "%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;%d.%06d;;\r\n",
+            "@imuenc:%llu;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%02d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;%s%d.%03d;;\r\n",
             (unsigned long long)ts_us,
             er_sign, er_int, er_frac,
             ep_sign, ep_int, ep_frac,
@@ -231,37 +213,7 @@ namespace periodics
             qx_sign, qx_int, qx_frac,
             qy_sign, qy_int, qy_frac,
             qz_sign, qz_int, qz_frac,
-            qw_sign, qw_int, qw_frac,
-            // orientation_covariance (row-major 3x3)
-            cov_ori_int, cov_ori_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_ori_int, cov_ori_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_ori_int, cov_ori_frac,
-            // angular_velocity_covariance (row-major 3x3)
-            cov_ang_int, cov_ang_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_ang_int, cov_ang_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_ang_int, cov_ang_frac,
-            // linear_acceleration_covariance (row-major 3x3)
-            cov_lin_int, cov_lin_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_lin_int, cov_lin_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_zero_int, cov_zero_frac,
-            cov_lin_int, cov_lin_frac);
+            qw_sign, qw_int, qw_frac);
 
         m_serial.write(buffer, strlen(buffer));
     }

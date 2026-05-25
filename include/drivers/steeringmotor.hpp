@@ -101,15 +101,15 @@ namespace drivers
             int16_t interpolate(int steering, const int steeringValueP[], const int steeringValueN[], const int pwmValuesP[], const int pwmValuesN[], int size);
 
             // Predefined values for steering reference and interpolation
-            const int steeringValueP[3] = {0, 150, 200};
-            const int steeringValueN[3] = {0, -150, -200};
+            const int steeringValueP[4] = {0, 150, 200, 250};
+            const int steeringValueN[4] = {0, -150, -200, -250};
 
-            const int pwmValuesP[3] = {
-                1500, 1801, 1914
+            const int pwmValuesP[4] = {
+                1500, 1751, 1820, 1914
             };
 
-            const int pwmValuesN[3] = {
-                1500, 1285, 1154
+            const int pwmValuesN[4] = {
+                1500, 1249, 1180, 1086
             };
 
     }; // class ISteeringCommand

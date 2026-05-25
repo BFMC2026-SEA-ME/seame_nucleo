@@ -54,9 +54,12 @@ namespace drivers{
         ,m_inf_limit(f_inf_limit)
         ,m_sup_limit(f_sup_limit)
     {
-        // Wait for Nucleo startup stabilization to prevent erratic motor 
-        // behavior caused by power-on reset cycles affecting PWM signals
-        // potentially resulting in chaotic left/right motor oscillations. 
+        // Set PWM period and neutral position immediately to prevent
+        // undefined pin state from moving the servo during startup.
+        m_pwm_pin.period_ms(ms_period);
+        m_pwm_pin.pulsewidth_us(zero_default);
+
+        // Hold neutral during Nucleo stabilization period.
         ThisThread::sleep_for(chrono::milliseconds(11000));
 
         m_pwm_pin.pulsewidth_us(zero_default);
@@ -135,11 +138,11 @@ namespace drivers{
             pwm_value = computePWMPolynomial(f_angle);
         }
         else{
-            pwm_value = interpolate(f_angle, steeringValueP, steeringValueN, pwmValuesP, pwmValuesN, 3);
+            pwm_value = interpolate(f_angle, steeringValueP, steeringValueN, pwmValuesP, pwmValuesN, 4);
         }
 
         m_pwm_pin.pulsewidth_us(pwm_value);
-        
+
     };
 
     /** @brief  It converts angle degree to duty cycle for pwm signal. 

@@ -56,7 +56,7 @@ periodics::CInstantConsumption g_instantconsumption(g_baseTick * 1000, A2, g_rpi
 periodics::CTotalVoltage g_totalvoltage(g_baseTick*3000, A4, g_rpi);
 
 // It's a task for sending periodically the IMU values
-periodics::CImu g_imu(g_baseTick*50, g_rpi, I2C_SDA, I2C_SCL);
+periodics::CImu g_imu(g_baseTick*20, g_rpi, I2C_SDA, I2C_SCL); // 50Hz
 
 //PIN for a motor speed in ms, inferior and superior limit
 drivers::CSpeedingMotor g_speedingDriver(D3, -500, 500); //speed in mm/s
@@ -78,7 +78,7 @@ brain::CBatterymanager g_batteryManager(dummy_value);
 /* USER NEW COMPONENT BEGIN */
 // Wheel encoder: Channel A = PA_0 (A0), Channel B = PC_7 (D9), Index = PB_4 (D5)
 periodics::CEncoder g_encoder(g_baseTick * 50, g_rpi, PA_0, PC_7, PB_4);
-periodics::CImuEncoderSync g_imuEncoderSync(g_baseTick * 50, g_rpi, g_imu, g_encoder);
+periodics::CImuEncoderSync g_imuEncoderSync(g_baseTick * 20, g_rpi, g_imu, g_encoder); // 50Hz
 
 
 /* USER NEW COMPONENT END */
